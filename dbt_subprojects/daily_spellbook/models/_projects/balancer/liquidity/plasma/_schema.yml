@@ -62,3 +62,37 @@ models:
       - &pool_liquidity_eth
         name: pool_liquidity_eth
         description: 'Liquidity of the token in the pool in ETH, including BPTs'
+
+  - name: balancer_v3_plasma_liquidity_reclamm
+    meta:
+      blockchain: plasma
+      project: balancer_v3
+      contributors: tiagoponciano
+    config:
+      tags: ['plasma', 'balancer', 'pools', 'liquidity', 'reclamm']
+    description: >
+      Balancer v3 reCLAMM pools hourly liquidity by token on plasma.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - hour
+            - pool_id
+            - token_address
+    columns:
+      - &hour
+        name: hour
+        description: "Block hour in UTC"
+      - *pool_id
+      - *pool_address
+      - *pool_symbol
+      - *version
+      - *blockchain
+      - *pool_type
+      - *token_address
+      - *token_symbol
+      - *token_balance_raw
+      - *token_balance
+      - *protocol_liquidity_usd
+      - *protocol_liquidity_eth
+      - *pool_liquidity_usd
+      - *pool_liquidity_eth
